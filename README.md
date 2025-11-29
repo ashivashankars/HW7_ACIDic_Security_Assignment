@@ -1,5 +1,11 @@
 # 📘 PKI Infrastructure + Tomcat HTTPS — CMPE 272
 
+Team ACIDic:
+- Archana Shivashankar
+- Pratham Rajesh
+- Venkata Rama Gowri Preetam Gunisetty
+- Zach Xie
+
 This project demonstrates how to build a complete Public Key Infrastructure (PKI) using OpenSSL and configure Tomcat 9 to serve HTTPS using certificates created by this PKI.
 
 The setup includes:
