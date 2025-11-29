@@ -1,0 +1,61 @@
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+dir               = .
+certs             = $dir/certs
+crl_dir           = $dir/crl
+new_certs_dir     = $dir/newcerts
+database          = $dir/index.txt
+serial            = $dir/serial
+private_key       = $dir/private/int.key.pem
+certificate       = $dir/certs/int.crt.pem
+default_md        = sha256
+policy            = policy_loose
+email_in_dn       = no
+name_opt          = ca_default
+cert_opt          = ca_default
+copy_extensions   = copy
+unique_subject    = no
+default_days      = 825   # ~27 months for server/ICA
+
+[ policy_loose ]
+countryName             = optional
+organizationName        = supplied
+commonName              = supplied
+
+[ req ]
+default_bits        = 3072
+distinguished_name  = dn
+string_mask         = utf8only
+default_md          = sha256
+req_extensions      = v3_req
+
+[ dn ]
+organizationName    = Organization Name
+commonName          = Common Name
+
+[ v3_req ]
+subjectAltName      = @alt_names
+
+[ v3_intermediate_ca ]
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always
+basicConstraints = critical, CA:true, pathlen:0
+keyUsage = critical, keyCertSign, cRLSign
+
+# For end-entity (server) certs the int CA will use this:
+[ server_cert ]
+basicConstraints = CA:false
+#nsCertType = server
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = app.local
+DNS.2 = www.app.local
+IP.1  = 127.0.0.1
+
